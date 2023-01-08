@@ -6,19 +6,6 @@ import Navbar from './components/Navbar.vue'
 
 <template>
   <Navbar v-bind="this.routes"></Navbar>
-  <header>
-    
-
-    <div class="wrapper">
-    
-
-      <!--<nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>-->
-    </div>
-  </header>
-
   <RouterView />
 </template>
 
