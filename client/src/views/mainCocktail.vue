@@ -2,14 +2,13 @@
     <div class="cen">
 <h1 >Welcome to the cocktail website!</h1>
 </div>
-<div v-for="cock in cocktails">
+<div v-for="cock in cocktails" class="cocktailClass">
 <Cocktail v-bind="cock"></Cocktail>
 </div>
 </template>
 
 
 <script>
-console.log("aaaha");
 import Cocktail from '../components/Cocktail.vue'
 export default{
     data() {
@@ -38,5 +37,10 @@ export default{
 }
 div{
     padding: 20px;
+    
+}
+.cocktailClass{
+    width: 20%;
+    float: left;
 }
 </style>

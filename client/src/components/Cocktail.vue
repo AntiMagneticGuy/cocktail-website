@@ -32,6 +32,7 @@ export default{
 .cocktail{
     border: 3px solid black;
     padding: 20px;
+    
 }
 .info {
     border: 1px solid black;
