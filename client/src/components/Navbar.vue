@@ -19,7 +19,7 @@ export default {
     
 <ul>
     <li style="float: left; background-color: #c0bebe;">Filips side (tm)</li>
-    <li v-for="item in routes"><RouterLink :to="item.link" class="route" > {{ item.desc }}</RouterLink></li>
+    <li v-for="item in this.routes"><RouterLink :to="item.link" class="route" > {{ item.desc }}</RouterLink></li>
 </ul>
 
 </nav>

@@ -8,7 +8,14 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: mainCocktail
-    }/*
+    }
+  ]
+})
+
+export default router
+
+
+/*
     {
       path: '/about',
       name: 'about',
@@ -16,8 +23,5 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/mainCocktail.vue')
-    }*/
-  ]
-})
-
-export default router
+    }
+    */
