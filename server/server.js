@@ -7,14 +7,16 @@ const helmet = require('helmet');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
-app.use('helmet');
+app.use(helmet());
 
 
-app.use(express.static('../site/dist'));
+app.use(express.static('../client/dist/'));
+app.use('/*', express.static('../client/dist/index.html'));
 app.get('/', (req, res) => {
-    res.sendFile('../site/dist/index.html');
+    //res.sendFile('../site/dist/index.html');
+    res.sendFile('index.html', {root: '../client/dist'});
 });
-app.use('/*', express.static('../site/dist/index.html'));
+//app.use('/*', express.static('../site/dist/index.html'));
 
 
 // app.use(express.static(__dirname + '../client/dist'));
@@ -39,7 +41,4 @@ httpServer.listen(5000, () => {
     console.log('listening on *:5000');
 });
 
-module.exports = {
-    io: new Server(httpServer),
-    app: app,
-};
+module.exports = app;
