@@ -6,8 +6,8 @@ export default {
         return {
             routes: [
                 { desc: "home1", link: "/" },
-                { desc: "home2", link: "/" },
-                { desc: "home3", link: "/" },
+                { desc: "about", link: "/about" },
+                { desc: "tes", link: "/asd" },
             ]
         }
     }
@@ -27,7 +27,9 @@ export default {
 </template>
 
 <style scoped>
-
+li:has(> .router-link-active) {
+    background-color: aquamarine;
+}
 
 ul {
     list-style-type: none;
@@ -52,7 +54,7 @@ li {
     padding: 8px;
     background-color: #dddddd;
 
-    background-color: rgb(163, 157, 157);
+    /*background-color: rgb(163, 157, 157);*/
 } 
 .active{
     background-color: aquamarine;
