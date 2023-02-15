@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "cd ../client & npm run build & cd ../server & nodemon server.js",
+    "nodeonly": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
