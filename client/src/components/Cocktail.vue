@@ -7,6 +7,7 @@
         <div class="info">
         <img :src="imgPath" width="250" height="250">
         <p>{{ desc }}</p>
+        <p><i>{{ cIngr }}</i></p>
         </div>
     </div>
 

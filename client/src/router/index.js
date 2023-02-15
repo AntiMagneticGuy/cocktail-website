@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import mainCocktail from '../views/mainCocktail.vue'
+import cocktailCreater from '../views/cocktailCreater.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: mainCocktail
+    },
+    {
+      path: '/create',
+      name: 'cocktailCreater',
+      component: cocktailCreater
     }
   ]
 })

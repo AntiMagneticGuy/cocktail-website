@@ -5,9 +5,9 @@ export default {
     data() {
         return {
             routes: [
-                { desc: "home1", link: "/" },
-                { desc: "about", link: "/about" },
-                { desc: "tes", link: "/asd" },
+                { desc: "HOME", link: "/" },
+                { desc: "ADD COCKTAIL", link: "/create" },
+                { desc: "3rd", link: "/asd" },
             ]
         }
     }

@@ -1,6 +1,10 @@
 <template>
     <div class="cen">
 <h1 >Welcome to the cocktail website!</h1>
+<form action="." method="get">
+    <label>Search for cocktails: <input type="search" name="query" id="searchBar" placeholder="search..."></label>
+    <input type="submit" value="Search">
+</form>
 </div>
 <div v-for="cock in cocktails" class="cocktailClass">
 <Cocktail v-bind="cock"></Cocktail>
