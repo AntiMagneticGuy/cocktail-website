@@ -4,10 +4,15 @@ const path = require('path');
 const bodyParser = require('body-parser');
 var cors = require('cors')
 const helmet = require('helmet');
+require("dotenv").config();
+require("./database.js").connect();
+
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use(helmet());
+app.use(express.json());
 
 
 app.use(express.static('../client/dist/'));
