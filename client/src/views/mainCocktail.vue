@@ -9,11 +9,24 @@
 <div v-for="cock in cocktails" class="cocktailClass">
 <Cocktail v-bind="cock"></Cocktail>
 </div>
+
+
 </template>
 
 
 <script>
 import Cocktail from '../components/Cocktail.vue'
+// try {
+//     console.log("options" + this.$router.getRoutes());
+// } catch (err) {
+//     console.log(err);
+// }
+// try {
+// console.log("other" + this.$router.routes)
+// } catch (err) {
+//     console.log(err);
+// }
+
 export default{
     data() {
         return {

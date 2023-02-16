@@ -1,14 +1,24 @@
 <script>
 import { RouterLink } from 'vue-router'
+import {rList} from '../router/index.js'
 
 export default {
+    // data() {
+    //     return {
+    //         routes: [
+    //             { name: "HOME", path: "/" },
+    //             { name: "ADD COCKTAIL", path: "/create" },
+    //             { name: "3rd", path: "/asd" },
+    //         ]
+    //     }
+    // }
+    // props: {
+    //     routes: { type: Object, required: true}
+    // }
+
     data() {
         return {
-            routes: [
-                { desc: "HOME", link: "/" },
-                { desc: "ADD COCKTAIL", link: "/create" },
-                { desc: "3rd", link: "/asd" },
-            ]
+            routes: rList,
         }
     }
 }
@@ -19,7 +29,10 @@ export default {
     
 <ul>
     <li style="float: left; background-color: #c0bebe;">Filips side (tm)</li>
-    <li v-for="item in this.routes"><RouterLink :to="item.link" class="route" > {{ item.desc }}</RouterLink></li>
+    <li v-for="item in routes">
+        <RouterLink :to="item.path" class="route" v-if="!(item.auth)"> {{ item.name }}</RouterLink>
+        <a v-else :href="item.path" class="route"> {{ item.name }}</a>
+    </li>
 </ul>
 
 </nav>

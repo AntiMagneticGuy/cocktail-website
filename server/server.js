@@ -10,24 +10,38 @@ const bcrypt = require("bcryptjs");
 const jwt  = require("jsonwebtoken");
 
 const User = require("./model_user.js");
+const auth = require("./auth.js")
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+app.disable('Etag');
 
 
-app.use(express.static('../client/dist/'));
-app.use('/*', express.static('../client/dist/index.html'));
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: '../client/dist'});
-});
+
+
+
 const http = require('http');
-const { brotliCompressSync } = require('zlib');
+//const { brotliCompressSync } = require('zlib');
 const httpServer = http.createServer(app);
 httpServer.listen(5000, () => {
     console.log('listening on *:5000');
 });
+
+app.get("/create", (req, res) => {
+    //res.status(200).send("Welcome");
+    res.sendFile('index.html', {root: '../client/dist'});
+});
+
+
+app.use(express.static('../client/dist/'));
+
+app.get('/', (req, res) => {
+    res.sendFile('index.html', {root: '../client/dist'});
+});
+
+
 
 app.post("/node/register", async (req, res) => {
 
@@ -39,7 +53,7 @@ app.post("/node/register", async (req, res) => {
 
         console.log(req.body)
         if (!(userName && password && email)){
-            res.status(400).send("wrong");
+           return res.status(400).send("wrong");
         }
 
         const found = await User.findOne({ email });
@@ -67,7 +81,7 @@ app.post("/node/register", async (req, res) => {
             user.token = token;
             delete user["password"];   /// does not work?
             //console.log(user);
-            res.status(201).json(user);
+           return res.status(201).json(user);
 
     } catch (err){
         console.log(err)
@@ -80,8 +94,28 @@ app.post("/node/login", async (req, res) => {
     try{
         const {email, password} = req.body;
 
+        if (!(email && password)){
+           return res.status(400).send("All input is required");
+        }
 
+        const user = await User.findOne({email})
 
+        if (user && (await bcrypt.compare(password,user.password))){
+            const token = jwt.sign(
+                {user_id: user.__id, email},
+                process.env.TOKEN_KEY,
+                {
+                    expiresIn: "3h"
+                }
+            );
+
+            user.token = token;
+
+            return res.status(200).json(user);
+
+        };
+
+       return res.status(400).send("Invalid credentials");
 
     } catch (err) {
         console.log(err)
@@ -93,5 +127,5 @@ app.post("/node/login", async (req, res) => {
 
 
 
-
+app.use('/*', express.static('../client/dist/index.html'));
 module.exports = app;
