@@ -19,9 +19,37 @@ export default {
     data() {
         return {
             routes: rList,
+            loggedIn: false
+        }
+    },
+    mounted() {
+            if (!(localStorage.getItem("user") === null)){ // logged in
+                this.routes = this.routes.filter((obj) => {
+                    return (obj.name != "login" && obj.name != "logout")
+                });
+                
+                this.loggedIn = true;
+                
+            }
+            else{
+                this.routes = this.routes.filter((obj) => {
+                    return (obj.name != "logout")
+                });
+            }
+
+        },
+        methods:{
+            logout(){
+                localStorage.removeItem("user");
+                this.$emit("logout");
+                //this.$router.push("/logout");
+            }
         }
     }
-}
+
+
+//<a v-else :href="item.path" class="route"> {{ item.name }}</a>
+//v-if="!(item.auth)"
 </script>
 
 <template>
@@ -30,9 +58,9 @@ export default {
 <ul>
     <li style="float: left; background-color: #c0bebe;">Filips side (tm)</li>
     <li v-for="item in routes">
-        <RouterLink :to="item.path" class="route" v-if="!(item.auth)"> {{ item.name }}</RouterLink>
-        <a v-else :href="item.path" class="route"> {{ item.name }}</a>
+        <RouterLink :to="item.path" class="route" > {{ item.name }}</RouterLink>
     </li>
+   <li v-if="loggedIn" class="route"  @click="logout"><RouterLink to="/logout"> Logout </RouterLink></li>
 </ul>
 
 </nav>

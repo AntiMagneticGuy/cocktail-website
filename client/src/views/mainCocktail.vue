@@ -1,6 +1,6 @@
 <template>
     <div class="cen">
-<h1 >Welcome to the cocktail website!</h1>
+<h1 >Welcome to the cocktail website{{user}}!</h1>
 <form action="." method="get">
     <label>Search for cocktails: <input type="search" name="query" id="searchBar" placeholder="search..."></label>
     <input type="submit" value="Search">
@@ -16,16 +16,8 @@
 
 <script>
 import Cocktail from '../components/Cocktail.vue'
-// try {
-//     console.log("options" + this.$router.getRoutes());
-// } catch (err) {
-//     console.log(err);
-// }
-// try {
-// console.log("other" + this.$router.routes)
-// } catch (err) {
-//     console.log(err);
-// }
+import VueJwtDecode from 'vue-jwt-decode'
+
 
 export default{
     data() {
@@ -35,6 +27,19 @@ export default{
             { cName: "Sex on the Beach", desc: "fersken", rating: 9, imgPath: "https://realhousemoms.com/wp-content/uploads/Sex-on-the-Beach-RECIPE-CARD.jpg"},
             
         ],
+        user: ""
+        }
+    },
+    mounted(){
+        if (!(localStorage.getItem("user") === null)) {
+            try {
+            let token = localStorage.getItem("user");
+
+            let decoded = VueJwtDecode.decode(token);
+            this.user = ", "+ decoded.userName;
+            } catch (err){
+                console.log(err);
+            }
         }
     },
 

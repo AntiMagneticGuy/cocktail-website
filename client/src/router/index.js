@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import mainCocktail from '../views/mainCocktail.vue'
 import cocktailCreater from '../views/cocktailCreater.vue'
+import login from '../views/login.vue'
+
+import VueJwtDecode from 'vue-jwt-decode'
+
 
 let routeList = [
     {
@@ -14,7 +18,23 @@ let routeList = [
       name: 'cocktailCreater',
       component: cocktailCreater,
       meta: {auth: true}
-    }
+    },
+        {
+      path: '/login',
+      name: 'login',
+      component: login,
+      meta: {auth: false}
+    },
+        {
+      path: '/logout',
+      name: "logout",
+       beforeEnter: (to, from) => {
+        localStorage.removeItem("user");
+        console.log("beforeEnter")
+      },
+      redirect: '/',
+     
+    },
   ]
 
   //console.log(routeList)
@@ -24,9 +44,34 @@ const router = createRouter({
   routes: routeList,
 })
 
-
+import axios, { AxiosError } from 'axios'
 router.beforeEach(async (to, from) => {
-    
+    if (to.meta.auth){
+        try{
+          let token = localStorage.getItem("user"); ///////////axios verify
+          const config ={
+            "x-access-token": token
+          }
+          if (!token) throw new Error("Not logged in");
+          await axios.get("/node/auth",config)
+          .then(res => console.log(res))
+          .catch(err => {
+            console.log(err.response.data);
+            localStorage.removeItem("user");
+            throw new Error("Invalid token");
+          });
+
+          let decoded = VueJwtDecode.decode(token);
+          console.log(decoded.userName, " has logged in")
+
+        } catch (err){
+          console.log(err);
+            return {name: 'login'}
+        }
+
+    }
+    // if 404 ..
+    //
 
 });
 

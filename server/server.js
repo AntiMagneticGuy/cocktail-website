@@ -29,10 +29,17 @@ httpServer.listen(5000, () => {
     console.log('listening on *:5000');
 });
 
-app.get("/create", (req, res) => {
-    //res.status(200).send("Welcome");
-    res.sendFile('index.html', {root: '../client/dist'});
+
+app.get("/node/auth", auth, async (req, res) => {
+    console.log("auth ok");
+    res.status(200).send("Ok!");
 });
+
+
+// app.get("/create", (req, res) => {
+//     //res.status(200).send("Welcome");
+//     res.sendFile('index.html', {root: '../client/dist'});
+// });
 
 
 app.use(express.static('../client/dist/'));
@@ -71,7 +78,7 @@ app.post("/node/register", async (req, res) => {
         });
 
         const token = jwt.sign(
-            {user_id: user._id, email},
+            {user_id: user._id, email, userName},
             process.env.TOKEN_KEY,
             {
                 expiresIn: "3h",
@@ -90,19 +97,21 @@ app.post("/node/register", async (req, res) => {
 });
 
 app.post("/node/login", async (req, res) => {
-
+    console.log("hit")
     try{
         const {email, password} = req.body;
 
         if (!(email && password)){
+            console.log(req.body)
            return res.status(400).send("All input is required");
         }
 
         const user = await User.findOne({email})
+        const userName = user ? user.userName : "";
 
         if (user && (await bcrypt.compare(password,user.password))){
             const token = jwt.sign(
-                {user_id: user.__id, email},
+                {user_id: user.__id, email, userName},
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "3h"
@@ -122,7 +131,6 @@ app.post("/node/login", async (req, res) => {
     }
 
 });
-
 
 
 
